@@ -225,66 +225,64 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      
-      {/* Right column: Text content with animation */}
-      <div className="w-full md:w-3/5 flex flex-col items-center md:items-start z-10">
-        <div 
-          className={`slide-up mb-4 ${animate ? 'animate-slide-up' : ''}`}
-          style={{
-            animation: animate ? 'slideUp 0.6s ease-out forwards' : 'none',
-            opacity: 0,
-            transform: 'translateY(20px)'
-          }}
-        >
-          <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-            Lewis Momanyi
-          </h1>
-          <h2 className="text-xl md:text-2xl text-gray-400 mt-2">Frontend Developer</h2>
-        </div>
-        
-        <div 
-          className="prose prose-invert max-w-none mb-8"
-          style={{
-            animation: animate ? 'slideUp 0.8s ease-out forwards' : 'none',
-            opacity: 0,
-            transform: 'translateY(20px)'
-          }}
-        >
-          <p className="text-lg text-gray-300">
-            I build modern, responsive web applications with a focus on user experience and performance.
-            Passionate about creating clean, efficient code and staying up-to-date with the latest web technologies.
-          </p>
-        </div>
-        
-        <div 
-          className="flex flex-col sm:flex-row gap-4"
-          style={{
-            animation: animate ? 'slideUp 1s ease-out forwards' : 'none',
-            opacity: 0,
-            transform: 'translateY(20px)'
-          }}
-        >
-          <a 
-            href="#projects" 
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-all flex items-center justify-center group"
+        <div className="w-full md:w-3/5 flex flex-col items-center md:items-start z-10">
+          <div 
+            className={`slide-up mb-4 ${animate ? 'animate-slide-up' : ''}`}
+            style={{
+          animation: animate ? 'slideUp 0.6s ease-out forwards' : 'none',
+          opacity: 0,
+          transform: 'translateY(20px)'
+            }}
           >
-            View Projects
-            <ChevronRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
+            <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+          Lewis Momanyi
+            </h1>
+            <h2 className="text-xl md:text-2xl text-gray-400 mt-2">Frontend Developer</h2>
+          </div>
           
-          <a 
-            href={CV} 
-            onClick={handleDownloadCV}
-            className="bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium border border-gray-700 px-6 py-3 rounded-lg transition-all flex items-center justify-center group"
-            download
+          <div 
+            className="prose prose-invert max-w-none mb-8"
+            style={{
+          animation: animate ? 'slideUp 0.8s ease-out forwards' : 'none',
+          opacity: 0,
+          transform: 'translateY(20px)'
+            }}
           >
-            Download CV
-            <Download className="ml-2 w-4 h-4 transition-transform group-hover:translate-y-1" />
-          </a>
+            <p className="text-lg text-gray-300">
+          I build modern, responsive web applications with a focus on user experience and performance.
+          Passionate about creating clean, efficient code and staying up-to-date with the latest web technologies.
+            </p>
+          </div>
+          
+          <div 
+            className="flex flex-col sm:flex-row gap-4"
+            style={{
+          animation: animate ? 'slideUp 1s ease-out forwards' : 'none',
+          opacity: 0,
+          transform: 'translateY(20px)'
+            }}
+          >
+            <a 
+          href="/projects" 
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-all flex items-center justify-center group"
+            >
+          View Projects
+          <ChevronRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </a>
+            
+            <a 
+          href={CV} 
+          onClick={handleDownloadCV}
+          className="bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium border border-gray-700 px-6 py-3 rounded-lg transition-all flex items-center justify-center group"
+          download
+            >
+          Download CV
+          <Download className="ml-2 w-4 h-4 transition-transform group-hover:translate-y-1" />
+            </a>
+          </div>
         </div>
-      </div>
-      
-      {/* Global styles */}
+        
+        {/* Global styles */}
       <style jsx global>{`
         @keyframes float {
           0%, 100% {

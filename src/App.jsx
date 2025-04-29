@@ -1,15 +1,12 @@
-import { useState, useEffect, useRef } from 'react'; 
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Download, Github, ExternalLink, Mail, Phone, ChevronRight, Code, GraduationCap, User } from 'lucide-react';
-import HomePage from '/src/pages/Home';
-import ProjectsPage from '/src/pages/Projects';
-import EducationPage from '/src/pages/Education';
-import AboutPage from '/src/pages/About';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef(null);
+  const location = useLocation();
 
   // Improved scroll handling
   useEffect(() => {
@@ -59,20 +56,18 @@ export default function App() {
   }, [menuOpen]);
 
   const navLinks = [
-    { name: 'Home', path: 'home', icon: <Code className="w-5 h-5" /> },
-    { name: 'Projects', path: 'projects', icon: <Code className="w-5 h-5" /> },
-    { name: 'Education', path: 'education', icon: <GraduationCap className="w-5 h-5" /> },
-    { name: 'About', path: 'about', icon: <User className="w-5 h-5" /> },
+    { name: 'Home', path: '/', icon: <Code className="w-5 h-5" /> },
+    { name: 'Projects', path: '/projects', icon: <Code className="w-5 h-5" /> },
+    { name: 'Education', path: '/education', icon: <GraduationCap className="w-5 h-5" /> },
+    { name: 'About', path: '/about', icon: <User className="w-5 h-5" /> },
   ];
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const closeMenu = () => {
     setMenuOpen(false);
-    window.scrollTo(0, 0);
   };
 
   return (
@@ -92,15 +87,16 @@ export default function App() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <button
+              <Link
                 key={link.path}
-                onClick={() => handlePageChange(link.path)}
+                to={link.path}
                 className={`flex items-center transition-all duration-300 hover:text-blue-400 ${
-                  currentPage === link.path ? 'text-blue-400 font-medium' : 'text-gray-300'
+                  location.pathname === link.path ? 'text-blue-400 font-medium' : 'text-gray-300'
                 }`}
+                onClick={closeMenu}
               >
                 {link.name}
-              </button>
+              </Link>
             ))}
           </div>
           
@@ -123,16 +119,17 @@ export default function App() {
         `}>
           <div className="flex flex-col items-center gap-8 pt-8 h-full overflow-y-auto">
             {navLinks.map((link) => (
-              <button
+              <Link
                 key={link.path}
-                onClick={() => handlePageChange(link.path)}
+                to={link.path}
                 className={`flex items-center gap-2 text-lg transition-all duration-300 hover:text-blue-400 ${
-                  currentPage === link.path ? 'text-blue-400 font-medium' : 'text-gray-300'
+                  location.pathname === link.path ? 'text-blue-400 font-medium' : 'text-gray-300'
                 }`}
+                onClick={closeMenu}
               >
                 {link.icon}
                 {link.name}
-              </button>
+              </Link>
             ))}
           </div>
         </div>
@@ -140,10 +137,7 @@ export default function App() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 pt-24 pb-12">
-        {currentPage === 'home' && <HomePage />}
-        {currentPage === 'projects' && <ProjectsPage />}
-        {currentPage === 'education' && <EducationPage />}
-        {currentPage === 'about' && <AboutPage />}
+        <Outlet />
       </main>
 
       {/* Footer */}
