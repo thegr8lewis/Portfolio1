@@ -1,6 +1,13 @@
 import { Download, ChevronRight } from 'lucide-react';
+import CV from '/src/assets/Lewis_Momanyi_Nyakaru_Resume.pdf';
 
 export default function HomePage() {
+  // Function to handle CV download
+  const handleDownloadCV = () => {
+    // You can add analytics or other tracking here if needed
+    console.log('CV download initiated');
+  };
+
   return (
     <div className="min-h-[85vh] flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
       {/* Left column: Photo/Avatar */}
@@ -26,16 +33,18 @@ export default function HomePage() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        <a 
+          href={CV} 
+          download="Lewis_Momanyi_Nyakaru_Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 shadow-lg shadow-blue-600/30"
+        >
+          <Download size={18} />
+          Download CV
+        </a>
           <a 
-            href="/Lewis_Momanyi_Nyakaru_Resume.pdf" 
-            download
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 shadow-lg shadow-blue-600/30"
-          >
-            <Download size={18} />
-            Download CV
-          </a>
-          <a 
-            href="#projects"
+            href="/projects"
             onClick={(e) => {
               e.preventDefault();
               document.querySelector('[data-page="projects"]')?.click();
