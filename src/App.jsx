@@ -7,13 +7,12 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef(null);
   const location = useLocation();
+  const scrollYRef = useRef(0);
 
   // Improved scroll handling
   useEffect(() => {
     const handleScroll = () => {
-      if (!menuOpen) {
-        setScrolled(window.scrollY > 20);
-      }
+      setScrolled(window.scrollY > 20);
     };
 
     // Throttle scroll events for better performance
@@ -30,25 +29,37 @@ export default function App() {
 
     window.addEventListener('scroll', throttledScroll);
     
-    // Lock body scroll when menu is open
+    // Set initial scroll state
+    handleScroll();
+    
+    return () => {
+      window.removeEventListener('scroll', throttledScroll);
+    };
+  }, []);
+
+  // Handle body scroll locking separately from scroll detection
+  useEffect(() => {
     if (menuOpen) {
+      // Store current scroll position before locking
+      scrollYRef.current = window.scrollY;
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
-      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.top = `-${scrollYRef.current}px`;
       document.body.style.width = '100%';
     } else {
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = 'auto';
+      // Restore scroll position after unlocking
+      document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      if (scrollYRef.current > 0) {
+        window.scrollTo(0, scrollYRef.current);
+      }
     }
 
     return () => {
-      window.removeEventListener('scroll', throttledScroll);
-      // Cleanup scroll lock
-      document.body.style.overflow = 'auto';
+      // Cleanup scroll lock on unmount
+      document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
@@ -100,7 +111,7 @@ export default function App() {
             ))}
           </div>
           
-          {/* Mobile menu button */}
+          {/* Mobile menu button - moved outside the mobile menu to ensure it's always clickable */}
           <button 
             onClick={toggleMenu} 
             className="md:hidden text-white z-50"
@@ -109,31 +120,31 @@ export default function App() {
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-        
-        {/* Mobile Navigation */}
-        <div className={`
-          fixed inset-0 bg-gray-900/95 z-40 md:hidden 
-          transition-all duration-300 ease-in-out
-          ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}
-          pt-24
-        `}>
-          <div className="flex flex-col items-center gap-8 pt-8 h-full overflow-y-auto">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`flex items-center gap-2 text-lg transition-all duration-300 hover:text-blue-400 ${
-                  location.pathname === link.path ? 'text-blue-400 font-medium' : 'text-gray-300'
-                }`}
-                onClick={closeMenu}
-              >
-                {link.icon}
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </div>
       </nav>
+      
+      {/* Mobile Navigation - moved outside nav to prevent z-index issues */}
+      <div className={`
+        fixed inset-0 bg-gray-900/95 z-40 md:hidden 
+        transition-all duration-300 ease-in-out
+        ${menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
+        pt-24
+      `}>
+        <div className="flex flex-col items-center gap-8 pt-8 h-full overflow-y-auto">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`flex items-center gap-2 text-lg transition-all duration-300 hover:text-blue-400 ${
+                location.pathname === link.path ? 'text-blue-400 font-medium' : 'text-gray-300'
+              }`}
+              onClick={closeMenu}
+            >
+              {link.icon}
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      </div>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 pt-24 pb-12">

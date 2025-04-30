@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { Download, ChevronRight } from 'lucide-react';
 import CV from '/src/assets/Lewis_Momanyi_Nyakaru_Resume.pdf';
 
@@ -262,13 +263,13 @@ export default function HomePage() {
           transform: 'translateY(20px)'
             }}
           >
-            <a 
-          href="/projects" 
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-all flex items-center justify-center group"
+            <Link 
+              to="/projects" 
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-all flex items-center justify-center group"
             >
-          View Projects
-          <ChevronRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </a>
+              View Projects
+              <ChevronRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </Link>
             
             <a 
           href={CV} 
