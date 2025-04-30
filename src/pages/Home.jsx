@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Download, ChevronRight } from 'lucide-react';
-import CV from '/src/assets/Lewis_Momanyi_Nyakaru_Resume.pdf';
+import CV from '/src/assets/lewis Momanyi Nyakaru Resume.pdf';
 
 // Tech stack icons
 const TechIcon = ({ icon, name, delay }) => {
@@ -238,7 +238,7 @@ export default function HomePage() {
             <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
           Lewis Momanyi
             </h1>
-            <h2 className="text-xl md:text-2xl text-gray-400 mt-2">Frontend Developer</h2>
+            <h2 className="text-xl md:text-2xl text-gray-400 mt-2">Software Engineer</h2>
           </div>
           
           <div 
